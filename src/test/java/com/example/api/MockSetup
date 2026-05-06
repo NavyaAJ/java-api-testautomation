@@ -1,6 +1,8 @@
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import com.github.tomakehurst.wiremock.WireMockServer;
 
+//This can be added in Hooks as well.
+// MockSetup.startServer() in a @Before hook and stopServer() in an @After hook.
 public class MockSetup {
     private static WireMockServer wireMockServer;
 
