@@ -35,6 +35,27 @@ public class ApiStepDefinitions {
                 .get(endpoint);
     }
 
+    //with wiremock
+    @When("I send a GET request to {string}")
+public void iSendAGetRequestTo(String endpoint) {
+    // Note: Use http://localhost:8080 as the base URI
+    response = RestAssured
+            .given()
+            .baseUri("http://localhost:8080") 
+            .header("Accept", "application/json")
+            .when()
+            .get(endpoint);
+}
+    @Then("the response status code should be 200")
+public void verifyStatusCode() {
+    response.then().statusCode(200);
+}
+
+@Then("the response should contain {string}")
+public void verifyResponseContent(String expectedKey) {
+    response.then().body("[0]", org.hamcrest.Matchers.hasKey(expectedKey));
+}
+
     @When("I send a POST request to {string}")
     public void iSendAPostRequestTo(String endpoint) {
         response = RestAssured
