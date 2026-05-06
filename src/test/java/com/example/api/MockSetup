@@ -1,0 +1,24 @@
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import com.github.tomakehurst.wiremock.WireMockServer;
+
+public class MockSetup {
+    private static WireMockServer wireMockServer;
+
+    public static void startServer() {
+        // Start server on port 8080 (or any available port)
+        wireMockServer = new WireMockServer(8080); 
+        wireMockServer.start();
+        configureFor("localhost", 8080);
+
+        // Define the Stub
+        stubFor(get(urlEqualTo("/users"))
+            .willReturn(aResponse()
+                .withStatus(200)
+                .withHeader("Content-Type", "application/json")
+                .withBody("[{\"id\": 1, \"name\": \"Leanne Graham\"}]")));
+    }
+
+    public static void stopServer() {
+        wireMockServer.stop();
+    }
+}
